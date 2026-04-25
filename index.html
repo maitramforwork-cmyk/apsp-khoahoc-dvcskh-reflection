@@ -1,0 +1,744 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Đánh Giá Năng Lực Dịch Vụ & Chăm Sóc Khách Hàng</title>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        :root {
+            --bg-primary: #f4f7fb; 
+            --apsp-green: #00a859;
+            --accent-gradient: linear-gradient(135deg, #00a859 0%, #00d2df 100%);
+            --text-main: #1f2937;
+            --text-muted: #6b7280;
+            --glass-bg: rgba(255, 255, 255, 0.85);
+            --glass-border: rgba(255, 255, 255, 1);
+            --glass-shadow: 0 10px 40px -10px rgba(0, 0, 0, 0.08);
+            --input-bg: #ffffff;
+            --input-border: #d1d5db;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-primary);
+            color: var(--text-main);
+            overflow-x: hidden;
+            line-height: 1.6;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .bg-shapes {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            z-index: -1;
+            overflow: hidden;
+            background: linear-gradient(120deg, #fdfbfb 0%, #ebedee 100%);
+        }
+
+        .shape {
+            position: absolute;
+            filter: blur(100px);
+            opacity: 0.6;
+            animation: float 20s infinite ease-in-out alternate;
+        }
+
+        .shape-1 {
+            top: -10%;
+            left: -10%;
+            width: 50vw;
+            height: 50vw;
+            background: rgba(0, 168, 89, 0.12);
+        }
+
+        .shape-2 {
+            bottom: -20%;
+            right: -10%;
+            width: 60vw;
+            height: 60vw;
+            background: rgba(0, 210, 223, 0.1);
+            animation-delay: -5s;
+        }
+
+        @keyframes float {
+            0% { transform: translate(0, 0) rotate(0deg); }
+            100% { transform: translate(50px, 50px) rotate(20deg); }
+        }
+
+        /* Navbar Layout */
+        nav {
+            position: relative;
+            width: 100%;
+            padding: 30px 0 10px 0;
+            z-index: 100;
+        }
+
+        .nav-content {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+        }
+
+        .logo-img {
+            max-height: 80px;
+            object-fit: contain;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 0 24px;
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .glass-card {
+            background: var(--glass-bg);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid var(--glass-border);
+            border-radius: 24px;
+            padding: 50px;
+            box-shadow: var(--glass-shadow);
+            margin-bottom: 50px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .step {
+            display: none;
+            animation: fadeInRight 0.5s ease forwards;
+        }
+
+        .step.active {
+            display: block;
+        }
+
+        @keyframes fadeInRight {
+            from { opacity: 0; transform: translateX(30px); }
+            to { opacity: 1; transform: translateX(0); }
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .section-header h2 {
+            font-size: 2.2rem;
+            margin-bottom: 16px;
+            background: var(--accent-gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .section-header p {
+            color: var(--text-muted);
+            font-size: 1.1rem;
+        }
+
+        .form-group {
+            margin-bottom: 30px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 20px;
+            font-weight: 500;
+            font-size: 1.15rem;
+            color: var(--text-main);
+            line-height: 1.6;
+        }
+
+        .form-group input[type="text"], 
+        .form-group select {
+            width: 100%;
+            background: var(--input-bg);
+            border: 1.5px solid var(--input-border);
+            border-radius: 12px;
+            padding: 18px 24px;
+            color: var(--text-main);
+            font-size: 1.1rem;
+            transition: all 0.3s;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.02) inset;
+        }
+
+        .form-group input:focus, 
+        .form-group select:focus {
+            outline: none;
+            border-color: var(--apsp-green);
+            box-shadow: 0 0 0 4px rgba(0, 168, 89, 0.15);
+        }
+
+        /* Likert Scale Styles */
+        .question-block {
+            background: #fff;
+            padding: 25px;
+            border-radius: 16px;
+            margin-bottom: 25px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.02);
+            border: 1px solid #f3f4f6;
+        }
+
+        .question-text {
+            font-size: 1.15rem;
+            font-weight: 500;
+            margin-bottom: 20px;
+            color: var(--text-main);
+        }
+
+        .rating-scale {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: relative;
+            padding: 10px 0;
+        }
+
+        .rating-scale::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 20px;
+            right: 20px;
+            height: 2px;
+            background: #e5e7eb;
+            z-index: 1;
+            transform: translateY(-50%);
+        }
+
+        .rating-option {
+            position: relative;
+            z-index: 2;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            cursor: pointer;
+            gap: 8px;
+        }
+
+        .rating-option input {
+            display: none;
+        }
+
+        .rating-circle {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: #fff;
+            border: 2px solid #d1d5db;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 600;
+            color: #6b7280;
+            transition: all 0.2s;
+        }
+
+        .rating-option input:checked + .rating-circle {
+            background: var(--apsp-green);
+            border-color: var(--apsp-green);
+            color: #fff;
+            transform: scale(1.1);
+            box-shadow: 0 4px 10px rgba(0, 168, 89, 0.3);
+        }
+
+        .rating-label {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            text-align: center;
+            max-width: 80px;
+        }
+
+        /* Buttons Layout */
+        .btn-group {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 40px;
+            padding-top: 30px;
+            border-top: 1px solid #e5e7eb;
+        }
+        
+        .btn-group.center {
+            justify-content: center;
+        }
+        
+        .btn-group.end {
+            justify-content: flex-end;
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            padding: 16px 36px;
+            border-radius: 50px;
+            font-weight: 600;
+            font-size: 1.1rem;
+            transition: all 0.3s;
+            border: none;
+            cursor: pointer;
+        }
+
+        .btn-primary {
+            background: var(--accent-gradient);
+            color: #fff;
+            box-shadow: 0 4px 15px rgba(0, 168, 89, 0.2);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 25px rgba(0, 168, 89, 0.3);
+        }
+
+        .btn-secondary {
+            background: #e5e7eb;
+            color: #374151;
+        }
+
+        .btn-secondary:hover {
+            background: #d1d5db;
+        }
+
+        /* Results Chart Area */
+        .result-container {
+            text-align: center;
+        }
+
+        .score-card {
+            display: flex;
+            justify-content: space-around;
+            background: #f9fafb;
+            padding: 30px;
+            border-radius: 20px;
+            margin: 30px 0;
+            border: 1px solid #e5e7eb;
+        }
+
+        .score-item h3 {
+            font-size: 1.2rem;
+            color: var(--text-muted);
+            margin-bottom: 10px;
+        }
+
+        .score-item .points {
+            font-size: 3rem;
+            font-weight: 800;
+            color: var(--apsp-green);
+        }
+
+        .progress-bar-bg {
+            height: 24px;
+            background: #e5e7eb;
+            border-radius: 12px;
+            overflow: hidden;
+            margin: 20px 0;
+            position: relative;
+        }
+
+        .progress-bar-fill {
+            height: 100%;
+            background: var(--accent-gradient);
+            width: 0%;
+            transition: width 1s ease-in-out;
+            position: relative;
+        }
+        
+        .progress-bar-fill::after {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: linear-gradient(45deg, rgba(255,255,255,0.2) 25%, transparent 25%, transparent 50%, rgba(255,255,255,0.2) 50%, rgba(255,255,255,0.2) 75%, transparent 75%, transparent);
+            background-size: 20px 20px;
+            animation: stripes 1s linear infinite;
+        }
+
+        @keyframes stripes {
+            0% { background-position: 0 0; }
+            100% { background-position: 20px 0; }
+        }
+
+        .conclusion {
+            font-size: 1.2rem;
+            line-height: 1.8;
+            margin-top: 30px;
+            padding: 20px;
+            background: #f0fdf4;
+            border-radius: 16px;
+            border-left: 5px solid var(--apsp-green);
+            text-align: left;
+        }
+
+        footer {
+            text-align: center;
+            padding: 30px 0;
+            color: var(--text-muted);
+            font-size: 0.9rem;
+        }
+
+        @media (max-width: 768px) {
+            .glass-card { padding: 30px 20px; }
+            .rating-label { font-size: 0.75rem; }
+            .rating-circle { width: 35px; height: 35px; font-size: 0.9rem; }
+            .score-card { flex-direction: column; gap: 20px; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="bg-shapes">
+        <div class="shape shape-1"></div>
+        <div class="shape shape-2"></div>
+    </div>
+
+    <nav>
+        <div class="container nav-content">
+            <img src="./logo.png" alt="AP Saigon Petro Logo" class="logo-img" />
+        </div>
+    </nav>
+
+    <main class="container">
+        <section>
+            <div class="glass-card">
+                
+                <form id="assessmentForm">
+                    
+                    <!-- STEP 1: Welcome & User Info -->
+                    <div class="step active" id="step1">
+                        <div class="section-header">
+                            <h2>Bài Đánh Giá Năng Lực DVCSKH</h2>
+                            <p>Hãy hoàn thành các thông tin bên dưới để bắt đầu bài trắc nghiệm tự đánh giá năng lực Dịch vụ và Chăm sóc Khách hàng của bạn.</p>
+                        </div>
+
+                        <div class="form-group" style="margin-top: 40px;">
+                            <label>Họ và tên của bạn:</label>
+                            <input type="text" id="fullname" required placeholder="Nhập họ và tên...">
+                        </div>
+                        <div class="form-group">
+                            <label>Phòng ban / Bộ phận:</label>
+                            <select id="department" required>
+                                <option value="" disabled selected>Chọn phòng ban...</option>
+                                <option value="BỘ PHẬN AN TOÀN & MÔI TRƯỜNG">BỘ PHẬN AN TOÀN & MÔI TRƯỜNG</option>
+                                <option value="BỘ PHẬN CÔNG NGHỆ SẢN XUẤT">BỘ PHẬN CÔNG NGHỆ SẢN XUẤT</option>
+                                <option value="BỘ PHẬN CUNG ỨNG">BỘ PHẬN CUNG ỨNG</option>
+                                <option value="BỘ PHẬN HÀNG HẢI">BỘ PHẬN HÀNG HẢI</option>
+                                <option value="BỘ PHẬN KHO VẬN">BỘ PHẬN KHO VẬN</option>
+                                <option value="BỘ PHẬN KỸ THUẬT BẢO TRÌ">BỘ PHẬN KỸ THUẬT BẢO TRÌ</option>
+                                <option value="BỘ PHẬN PTTT">BỘ PHẬN PTTT</option>
+                                <option value="CHI NHÁNH MIỀN BẮC">CHI NHÁNH MIỀN BẮC</option>
+                                <option value="QUYỀN GĐ NHÀ MÁY">QUYỀN GĐ NHÀ MÁY</option>
+                                <option value="PHÒNG DỊCH VỤ CHĂM SÓC KHÁCH HÀNG">PHÒNG DỊCH VỤ CHĂM SÓC KHÁCH HÀNG</option>
+                                <option value="PHÒNG KẾ TOÁN">PHÒNG KẾ TOÁN</option>
+                                <option value="PHÒNG MARKETING">PHÒNG MARKETING</option>
+                                <option value="PHÒNG NHÂN SỰ">PHÒNG NHÂN SỰ</option>
+                                <option value="PHÒNG QUẢN LÝ KÊNH PHÂN PHỐI (GT)">PHÒNG QUẢN LÝ KÊNH PHÂN PHỐI (GT)</option>
+                                <option value="PHÒNG R & D, QC">PHÒNG R & D, QC</option>
+                                <option value="PHÒNG XUẤT KHẨU">PHÒNG XUẤT KHẨU</option>
+                            </select>
+                        </div>
+                        
+                        <div class="btn-group center">
+                            <button type="button" class="btn btn-primary" onclick="nextStep(1)">
+                                Bắt đầu <i class="fa-solid fa-arrow-right"></i>
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- STEP 2: Instructions -->
+                    <div class="step" id="step2">
+                        <div class="section-header">
+                            <h2>Hướng Dẫn Thực Hiện</h2>
+                            <p>Đọc kỹ để có kết quả phản ánh đúng nhất năng lực của bạn.</p>
+                        </div>
+                        
+                        <div style="font-size: 1.15rem; color: var(--text-main); margin-bottom: 30px; background: #fff; padding: 25px; border-radius: 16px; border: 1px solid #f3f4f6;">
+                            <p style="margin-bottom: 15px;">Bài trắc nghiệm gồm 10 câu hỏi mô tả các hành vi làm việc thường ngày của bạn với khách hàng.</p>
+                            <p style="margin-bottom: 15px;">Sẽ không có lựa chọn "Đúng" hay "Sai". Mỗi câu đều là một thói quen tốt trong công việc. Hãy đánh giá trung thực xem hành vi đó <b>giống với bạn ở mức độ nào</b> theo thang điểm từ 1 đến 5:</p>
+                            
+                            <ul style="list-style: none; margin-left: 10px;">
+                                <li style="margin-bottom: 8px;"><b>1 điểm:</b> Hoàn toàn không đúng với tôi.</li>
+                                <li style="margin-bottom: 8px;"><b>2 điểm:</b> Rất hiếm khi tôi làm như vậy.</li>
+                                <li style="margin-bottom: 8px;"><b>3 điểm:</b> Thỉnh thoảng tôi có làm như vậy.</li>
+                                <li style="margin-bottom: 8px;"><b>4 điểm:</b> Thường xuyên đúng với tôi.</li>
+                                <li><b>5 điểm:</b> Hoàn toàn chính xác mô tả phong cách làm việc của tôi.</li>
+                            </ul>
+                        </div>
+
+                        <div class="btn-group">
+                            <button type="button" class="btn btn-secondary" onclick="prevStep(2)"><i class="fa-solid fa-arrow-left"></i> Quay lại</button>
+                            <button type="button" class="btn btn-primary" onclick="nextStep(2)">Đã hiểu, Bắt đầu Test <i class="fa-solid fa-play"></i></button>
+                        </div>
+                    </div>
+
+                    <!-- STEP 3: Assessment Questions -->
+                    <div class="step" id="step3">
+                        <div class="section-header">
+                            <h2>Đánh Giá Hành Vi</h2>
+                            <p>Hãy chọn mức độ phù hợp nhất cho từng câu hỏi bên dưới.</p>
+                        </div>
+
+                        <div id="questionsContainer">
+                            <!-- Câu hỏi sẽ được chèn bằng JavaScript -->
+                        </div>
+
+                        <div class="btn-group">
+                            <button type="button" class="btn btn-secondary" onclick="prevStep(3)"><i class="fa-solid fa-arrow-left"></i> Quay lại</button>
+                            <button type="button" class="btn btn-primary" onclick="submitAssessment()" id="submitBtn">Hoàn Thành & Xem Kết Quả <i class="fa-solid fa-check-to-slot"></i></button>
+                        </div>
+                    </div>
+
+                    <!-- STEP 4: Results -->
+                    <div class="step" id="step4">
+                        <div class="result-container">
+                            <h2 style="font-size: 2.2rem; background: var(--accent-gradient); -webkit-background-clip: text; -webkit-text-fill-color: transparent; margin-bottom: 10px;">Kết Quả Của Bạn</h2>
+                            <p style="color: var(--text-muted); font-size: 1.1rem; margin-bottom: 30px;">Phân tích tương quan giữa "Dịch Vụ" và "Chăm Sóc"</p>
+                            
+                            <div class="score-card">
+                                <div class="score-item">
+                                    <h3>Dịch Vụ Khách Hàng (DVKH)</h3>
+                                    <div class="points" id="scoreDVKH">0</div>
+                                    <p style="color: var(--text-muted); font-size: 0.9rem;">(Bị động, xử lý giao dịch)</p>
+                                </div>
+                                <div class="score-item">
+                                    <h3>Chăm Sóc Khách Hàng (CSKH)</h3>
+                                    <div class="points" id="scoreCSKH">0</div>
+                                    <p style="color: var(--text-muted); font-size: 0.9rem;">(Chủ động, cá nhân hóa)</p>
+                                </div>
+                            </div>
+
+                            <div style="text-align: left; margin-bottom: 10px; font-weight: 600;">Tỉ lệ phần trăm Năng lực Chăm sóc (CSKH): <span id="percentText" style="color: var(--apsp-green);">0%</span></div>
+                            <div class="progress-bar-bg">
+                                <div class="progress-bar-fill" id="resultProgressBar"></div>
+                            </div>
+
+                            <div class="conclusion" id="conclusionText">
+                                <!-- Kết luận được tính toán qua JS -->
+                            </div>
+                            
+                            <p style="margin-top: 30px; font-size: 0.95rem; color: var(--text-muted);">
+                                <i>Dữ liệu của bạn đã được lưu tự động trên hệ thống để phục vụ cho báo cáo nội bộ. Cảm ơn bạn đã tham gia đánh giá!</i>
+                            </p>
+                        </div>
+                    </div>
+
+                </form>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="container">
+            <p>&copy; 2026 AP Saigon Petro - Learning & Development.</p>
+        </div>
+    </footer>
+
+    <script>
+        const rawQuestions = [
+            // 5 Câu DVKH
+            { id: 'q_dvkh_1', type: 'DVKH', text: 'Phần lớn thời gian làm việc của tôi là để trả lời các câu hỏi hoặc yêu cầu hỗ trợ phát sinh từ phía khách hàng.' },
+            { id: 'q_dvkh_2', type: 'DVKH', text: 'Việc hướng dẫn khách hàng các thủ tục mua bán, thanh toán và bảo hành chiếm phần lớn sự ưu tiên của tôi.' },
+            { id: 'q_dvkh_3', type: 'DVKH', text: 'Tôi chỉ liên hệ với khách hàng khi cần thông báo về tiến độ đơn hàng hoặc khi họ có thắc mắc cần giải đáp.' },
+            { id: 'q_dvkh_4', type: 'DVKH', text: 'Đối với những khách hàng khó tính, cách tốt nhất là áp dụng đúng chính sách của công ty để tránh những rắc rối về sau.' },
+            { id: 'q_dvkh_5', type: 'DVKH', text: 'Tôi lưu trữ thông tin khách hàng chủ yếu để phục vụ cho việc đối chiếu đơn hàng và lịch sử giao dịch khi cần thiết.' },
+            
+            // 5 Câu CSKH
+            { id: 'q_cskh_1', type: 'CSKH', text: 'Dù khách hàng chưa hề phàn nàn, tôi vẫn thường xuyên chủ động gọi điện/nhắn tin hỏi thăm xem họ sử dụng sản phẩm có tốt không.' },
+            { id: 'q_cskh_2', type: 'CSKH', text: 'Khi có một chương trình khuyến mãi mới, tôi chủ động lọc danh sách những khách hàng cũ có thể quan tâm để nhắn tin báo riêng cho họ.' },
+            { id: 'q_cskh_3', type: 'CSKH', text: 'Tôi luôn cố gắng nhớ tên và những câu chuyện cá nhân nhỏ mà khách hàng từng kể (như chuyện gia đình, sở thích) để hỏi thăm trong lần gặp sau.' },
+            { id: 'q_cskh_4', type: 'CSKH', text: 'Tôi thường xuyên đọc lại lịch sử mua hàng của khách để dự đoán xem sắp tới họ có cần nhập thêm hàng hay không và nhắc nhở họ.' },
+            { id: 'q_cskh_5', type: 'CSKH', text: 'Trong các dịp đặc biệt (Lễ, Tết, Sinh nhật), tôi luôn cố gắng gửi lời chúc chân thành cá nhân hóa đến khách hàng thay vì chỉ gửi tin nhắn tự động hàng loạt.' }
+        ];
+
+        let questions = [];
+
+        // Trộn ngẫu nhiên câu hỏi (Fisher-Yates shuffle)
+        function shuffleArray(array) {
+            let currentIndex = array.length, randomIndex;
+            while (currentIndex != 0) {
+                randomIndex = Math.floor(Math.random() * currentIndex);
+                currentIndex--;
+                [array[currentIndex], array[randomIndex]] = [array[randomIndex], array[currentIndex]];
+            }
+            return array;
+        }
+
+        function renderQuestions() {
+            questions = shuffleArray([...rawQuestions]);
+            const container = document.getElementById('questionsContainer');
+            container.innerHTML = '';
+
+            questions.forEach((q, index) => {
+                const questionHTML = `
+                    <div class="question-block">
+                        <div class="question-text">Câu ${index + 1}: ${q.text}</div>
+                        <div class="rating-scale">
+                            <label class="rating-option">
+                                <input type="radio" name="${q.id}" value="1" required>
+                                <div class="rating-circle">1</div>
+                                <span class="rating-label">Không<br>đúng</span>
+                            </label>
+                            <label class="rating-option">
+                                <input type="radio" name="${q.id}" value="2">
+                                <div class="rating-circle">2</div>
+                                <span class="rating-label"></span>
+                            </label>
+                            <label class="rating-option">
+                                <input type="radio" name="${q.id}" value="3">
+                                <div class="rating-circle">3</div>
+                                <span class="rating-label"></span>
+                            </label>
+                            <label class="rating-option">
+                                <input type="radio" name="${q.id}" value="4">
+                                <div class="rating-circle">4</div>
+                                <span class="rating-label"></span>
+                            </label>
+                            <label class="rating-option">
+                                <input type="radio" name="${q.id}" value="5">
+                                <div class="rating-circle">5</div>
+                                <span class="rating-label">Chính<br>xác</span>
+                            </label>
+                        </div>
+                    </div>
+                `;
+                container.innerHTML += questionHTML;
+            });
+        }
+
+        // Điều hướng các bước
+        function showStep(stepIndex) {
+            document.querySelectorAll('.step').forEach(el => el.classList.remove('active'));
+            document.getElementById(`step${stepIndex}`).classList.add('active');
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        function nextStep(current) {
+            if (current === 1) {
+                if(!document.getElementById('fullname').value.trim() || !document.getElementById('department').value) {
+                    alert("Vui lòng điền đủ Họ tên và chọn Phòng ban!");
+                    return;
+                }
+            }
+            showStep(current + 1);
+        }
+
+        function prevStep(current) {
+            showStep(current - 1);
+        }
+
+        function submitAssessment() {
+            // Check validation
+            const form = document.getElementById('assessmentForm');
+            if(!form.reportValidity()) {
+                alert("Vui lòng hoàn thành tất cả các câu hỏi trước khi nộp!");
+                return;
+            }
+
+            const btn = document.getElementById('submitBtn');
+            btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Đang tính toán...';
+            btn.disabled = true;
+
+            // Tính điểm
+            let scoreDVKH = 0;
+            let scoreCSKH = 0;
+
+            questions.forEach(q => {
+                const selected = document.querySelector(`input[name="${q.id}"]:checked`).value;
+                if(q.type === 'DVKH') {
+                    scoreDVKH += parseInt(selected);
+                } else {
+                    scoreCSKH += parseInt(selected);
+                }
+            });
+
+            // Gọi hàm submit qua AppScript (để placeholder cho URL mới)
+            sendDataToAppScript(scoreDVKH, scoreCSKH);
+            
+            // Xử lý hiển thị kết quả
+            setTimeout(() => {
+                showResults(scoreDVKH, scoreCSKH);
+            }, 800);
+        }
+
+        function showResults(dvkh, cskh) {
+            showStep(4);
+            
+            document.getElementById('scoreDVKH').innerText = dvkh;
+            document.getElementById('scoreCSKH').innerText = cskh;
+
+            const total = dvkh + cskh;
+            const percentCSKH = Math.round((cskh / total) * 100);
+            
+            document.getElementById('percentText').innerText = percentCSKH + '%';
+            
+            // Thanh màu chạy sau khi hiển thị form một chút để tạo hiệu ứng
+            setTimeout(() => {
+                document.getElementById('resultProgressBar').style.width = percentCSKH + '%';
+            }, 300);
+
+            let conclusion = "";
+            if (percentCSKH >= 55) {
+                conclusion = "<b>Tuyệt vời! Bạn có tư duy Chăm Sóc Khách Hàng (CSKH) rất chủ động.</b><br>Bạn liên tục tìm cách kết nối, thấu hiểu và mang lại trải nghiệm cá nhân hóa cho khách hàng. Nhưng chỉ chăm sóc tốt mối quan hệ là chưa đủ nếu các vấn đề phát sinh không được xử lý nhanh chóng và chuẩn xác. Để dịch vụ thật sự hoàn hảo, bạn cần trau dồi thêm năng lực nền tảng về DVKH.<br><br><b>💡 Hãy tham khảo lộ trình nâng cấp năng lực DVKH sau:</b><br>- <b>Kiến thức (Knowledge):</b> Nắm vững và am hiểu tường tận Sản phẩm/dịch vụ, Quy trình nghiệp vụ, và Chính sách công ty.<br>- <b>Kỹ năng (Skills):</b> Cải thiện kỹ năng Giải quyết vấn đề nhanh chóng, Giao tiếp rõ ràng và Làm việc tốt dưới áp lực.<br>- <b>Thái độ (Attitudes):</b> Đảm bảo sự <b>Chuyên nghiệp & Chuẩn mực</b>, luôn Kiên nhẫn và Tận tâm khi xử lý sự cố.";
+            } else if (percentCSKH >= 45 && percentCSKH < 55) {
+                conclusion = "<b>Bạn đang cân bằng khá tốt giữa Dịch Vụ (DVKH) và Chăm Sóc (CSKH).</b><br>Bạn vừa đảm bảo được quy trình xử lý khiếu nại trơn tru, vừa bắt đầu có ý thức về việc chăm sóc chủ động. Để tiến lên cấp độ xuất sắc, bạn cần tăng cường thêm sự chủ động nữa: hãy thử liên hệ hỏi thăm trước cả khi khách hàng gặp sự cố nhé!";
+            } else {
+                conclusion = "<b>Tuyệt vời! Bạn đang làm rất tốt vai trò Dịch Vụ Khách Hàng (DVKH).</b><br>Bạn là một người tuân thủ quy trình tuyệt đối và giải quyết vấn đề cho khách hàng vô cùng hiệu quả. Nhưng việc giải quyết vấn đề hiện tại cho khách hàng là chưa đủ. Để giữ chân khách hàng trung thành, bạn cần trau dồi thêm năng lực về CSKH.<br><br><b>💡 Hãy tham khảo lộ trình nâng cấp năng lực CSKH sau:</b><br>- <b>Kiến thức (Knowledge):</b> Nâng cao hiểu biết về Tâm lý học khách hàng và ứng dụng Dữ liệu khách hàng.<br>- <b>Kỹ năng (Skills):</b> Rèn luyện kỹ năng Xây dựng mối quan hệ lâu dài, Phân tích và Dự báo nhu cầu.<br>- <b>Thái độ (Attitudes):</b> Dịch chuyển từ tiếp nhận bị động sang <b>Chủ động & Nhiệt thành</b>, luôn giữ sự Chân thành và Sáng tạo trong dịch vụ.";
+            }
+
+            document.getElementById('conclusionText').innerHTML = conclusion;
+        }
+
+        function sendDataToAppScript(scoreDVKH, scoreCSKH) {
+            const fullname = document.getElementById('fullname').value;
+            const department = document.getElementById('department').value;
+            const date = new Date().toLocaleString('vi-VN');
+
+            // LƯU Ý CHO L&D: Thay URL AppScript mới tại đây khi đã tạo Google Sheet mới
+            const scriptURL = 'https://script.google.com/macros/s/AKfycbwOPpOVDow53GAK7UZ8m4X1zdAiBie3ZixLF0FWvTn8DiU3FeVY-MZzeT1irzHdw9an/exec';
+            
+            let formData = new FormData();
+            formData.append('Ngày nộp', date);
+            formData.append('Ngày Nộp', date);
+            formData.append('Họ Tên', fullname);
+            formData.append('Họ tên', fullname);
+            formData.append('Phòng ban', department);
+            formData.append('Phòng Ban', department);
+            formData.append('Điểm DVKH', scoreDVKH);
+            formData.append('Điểm CSKH', scoreCSKH);
+            
+            // Gửi từng câu hỏi để phân tích sâu nếu cần
+            questions.forEach(q => {
+                const val = document.querySelector(`input[name="${q.id}"]:checked`).value;
+                formData.append(q.id, val); // Sẽ gửi dưới dạng q_dvkh_1: 4, q_cskh_2: 5...
+            });
+
+            // Vẫn dùng mode CORS ngầm nên không chặn user nếu lỗi mạng nhẹ, chỉ report success ngầm
+            fetch(scriptURL, { method: 'POST', body: formData })
+                .then(response => console.log('Data synced!'))
+                .catch(error => console.error('Sync Error', error));
+        }
+
+        // Initialize
+        window.onload = () => {
+            renderQuestions();
+        };
+
+    </script>
+</body>
+</html>
